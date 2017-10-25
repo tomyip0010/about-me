@@ -8,20 +8,20 @@ $(document).on('scroll', function() {
 });
 
 //section two paragraph
-$('#section-two .btn').click(function(event) {
+$('#section-two .btn').click(function() {
     $('.actively').removeClass('actively');
     $(this).addClass('actively');
-    var index = $('.md-36').index(event.target);
+    var index = $(this).index();
     var target = $('.content');
     var width = $('.paragraph').outerWidth();
-    var position = parseInt($('.paragraph:eq('+index+')').css('left'));
+    var position;
 
     if (index === 0) {
         position = 0;
     } else if (index === 1) {
-        position = (position+width)*1.1;
+        position = width*1.1;
     } else {
-        position = (position+width*2)*1.1;
+        position = width*2*1.1;
     }
     $(target).animate({ left: -position}, 'slow');
 });
@@ -44,23 +44,24 @@ $('a.btn.close').on('click', function() {
 
 
 //next and prev
+var sectionIndex = 0;
 $('#next').click(function() {
     var target = $('.section')
-    var left = parseInt($(target).last().css('left'));
     var distance = parseInt($(target).css('width')) ;
-    var length = distance* (target.length - 1 );
 
     //for cards
-    console.log(left);
     if ($(window).width() <= 768) {
-        if (left > -length) {
-            $(target).animate({ left: left-distance}, 'slow');
+        if (sectionIndex < target.length-1) {
+            sectionIndex ++;
+            $(target).animate({ left: -distance*sectionIndex}, 'slow');
         }
     } else {
-        if (left >= -698) {
-            $(target).animate({ left: left-distance}, 'slow');
+        if (sectionIndex < target.length-3) {
+            sectionIndex ++;
+            $(target).animate({ left: -distance*sectionIndex}, 'slow');
         }
     }
+   
     //for dots
     var active = $('.active-dot');
     var dots = $('.dot:eq('+active.index()+')');
@@ -74,13 +75,15 @@ $('#next').click(function() {
 
 $('#prev').click(function() {
     var target = $('.section')
-    var left = parseInt($(target[0]).css('left'));
     var distance = parseInt($(target).css('width'));
     
     //for cards
-    if(left < 0) {
-        $(target).animate({ left: left+distance}, 'slow');
+    console.log(distance, sectionIndex, sectionIndex/6, Math.round(sectionIndex/5));
+    if(sectionIndex > 0) {
+        sectionIndex --;
+        $(target).animate({ left: -distance*sectionIndex }, 'slow');
     }
+
     //for dots
     var active = $('.active-dot');
     var dots = $(active).last();
@@ -128,7 +131,7 @@ function smoothScroll() {
 //page animation
 
 //monitoring scroll position
-$('.selfie, .icons, .contact-me').hide();
+$('.selfie, .icons, .contact-me, .section').hide();
 $('.words').hide().fadeIn(3000);
 
 var icons = $(".icons-container").children();
@@ -145,6 +148,11 @@ $(window).scroll(function () {
     if (scroll >= section1/2) {
         $('.selfie, .icons').fadeIn(2000);
     } 
+    if (scroll >= section2) {
+        $('.section').each(function(index) {
+            $(this).delay(index*200).fadeIn(2000);
+        })
+    }
     if (scroll >= section3) {
         $('.contact-me').fadeIn(3000);
         icons.each(function(index) {
