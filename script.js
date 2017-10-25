@@ -128,7 +128,7 @@ function smoothScroll() {
 //page animation
 
 //monitoring scroll position
-$('.selfie, .icons, .contact-me, .section, .dots-tab').hide();
+$('.selfie, .icons, .contact-me').hide();
 $('.words').hide().fadeIn(3000);
 
 var icons = $(".icons-container").children();
@@ -145,11 +145,6 @@ $(window).scroll(function () {
     if (scroll >= section1/2) {
         $('.selfie, .icons').fadeIn(2000);
     } 
-    if (scroll >= section2) {
-        $('.section').fadeIn(2000);
-       
-        $('.dots-tab').fadeIn(2000);
-    }
     if (scroll >= section3) {
         $('.contact-me').fadeIn(3000);
         icons.each(function(index) {
