@@ -216,7 +216,8 @@ img{
 }
 
 .learn-more {
-    margin-top: 20%;
+    position: relative;
+    bottom: 1%;
     font-family: 'Quicksand', sans-serif;
 }
 
@@ -368,5 +369,10 @@ img{
 
     .mask {
         overflow-y: scroll;
+    }
+
+    img {
+        max-width: 80px !important;
+        max-height: 80px !important;
     }
 }
